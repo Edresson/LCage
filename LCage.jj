@@ -1,0 +1,257 @@
+PARSER_BEGIN(LCage)
+import java.io.*;
+public class LCage {
+
+  public static void main(String args[]) throws ParseException,IOException {
+    try{
+		LCage parser = new LCage(new FileInputStream(args[0]));
+    	parser.LCage();
+
+	}
+	catch (Exception e) 
+	{
+		System.out.println( "Analise Sintaxica NOT OK");
+		System.out.println("Erro de Token.");
+		System.out.println(e.getMessage());
+		e.printStackTrace(); 
+	}
+	catch (Error e)
+	{
+		System.out.println(e.getMessage()); //Mensagem de erro léxico (em ingles) mostrando linha e coluna
+	}
+
+
+    
+
+  }
+
+}
+
+PARSER_END(LCage)
+
+
+TOKEN_MGR_DECLS:
+{
+static int countLexError = 0;
+int countParserError = 0;
+public int foundLexError()
+{
+   return countLexError;
+}
+public int foundParserError()
+{
+   return countParserError;
+}
+}
+
+
+SKIP :
+{
+  " "
+| "\t"
+| "\n"
+| "\r"
+| <COMENTARIO: "//" (<COM>)* >
+| <COMENTARIOS: "/*" ("\n" | "\r" | <COM>)* "*/" >
+| <#COM: ( ~["\"","\\","\n","\r","\""] | "\\" ( ["n","t","b","r","f","\\","\'","\""] | ( ["\n","\r"] | "\r\n") ) | "\"" )*>
+}
+
+TOKEN :
+{
+  <MAIN: "main">
+| <ACHAVES: "{">
+| <FCHAVES: "}">
+| <APARENT: "(">
+| <FPARENT: ")">
+| <VAR: "cage">
+| <PTOVIRGULA: ";">
+| <IF: "if">
+| <WHILE: "ncage">
+| <DO: "do">
+| <RETURN: "return">
+| <PRINT: "print">
+| <FUNCAO: "funCage">
+| <INT: "icage">
+| <FLOAT: "fcage">
+| <BOOL: "bcage">
+| <TRUE: "true">
+| <FALSE: "false">
+| <VIRGULA: ",">
+| <ATRIB: ":=">
+}
+
+TOKEN :
+{
+ <OP: ("+" | "-" | "*" | "/" | "&&" | "||" | "<" | ">" | "==")>
+|<#LETRA: ["a"-"z","A"-"Z"]> 
+|<#DIGITO: ["0"-"9"]>
+|<#DIGITOS: <DIGITO>(<DIGITO>)*>
+|<#LD: <LETRA> | <DIGITO>>
+|<#FSUB: ("_"(<LD>)+)>
+|<#FOP: ("."<DIGITOS>)?>
+|<#EXPOP: ("E"("+"|"-")?<DIGITOS>)?>
+|<TOKEN_ID: <LETRA>(<LD>)*(<FSUB>)*>
+|<TOKEN_NUMLIT: <DIGITOS><FOP><EXPOP>>
+}
+
+
+
+// TRATANDO OS ERROS LEXICOS ENCONTRADOS
+SPECIAL_TOKEN : {
+ <ID_INVALIDO: ("@" | "!" | "#" | "*" | "-" | "+" "=" | "&" | <DIGITO>)(<LETRA>|<DIGITO> | "_" | "@")*>{
+                                     System.out.println("IDENTIFICADOR: "+image);
+                                     countLexError++;
+                                     System.out.println("\u005cn\u005cnErro lexico -------->  Linha "+ input_stream.getEndLine()+" Coluna "+ input_stream.getEndColumn()+" "+image +"\u005cn");
+                                     }
+|
+<INVALIDO_LEXICO: 
+(~["a"-"z",
+"A"-"Z",
+"0"-"9","\"","(",")","[","]","{","}",";",",",".","=",">","<","!","+","-","*","/","%"," ","\t","\n","\r","\f"
+])+>{System.err.println("Linha "+ input_stream.getEndLine()+" Coluna "+ input_stream.getEndColumn()+" Caractere invalido encontrado: " + image + "TOTAL ERRO "+countLexError);
+                          countLexError++;
+                          System.out.println("Erro Lexico --------> "+image);
+                          System.out.println("\u005cn\u005cnErro lexico -------->  Linha "+ input_stream.getEndLine()+" Coluna "+ input_stream.getEndColumn()+" "+image +"\u005cn");
+                          }
+|
+<INVALID_CONST:
+"\"" (~["\n","\r","\""])*["\n","\r"]>{System.err.println("Linha "+ input_stream.getEndLine()+" Coluna "+ input_stream.getEndColumn()+" Caractere invalido encontrado \\n: " + image+" Era esperado uma aspa");
+                                     countLexError++;
+                                     System.out.println("Erro Lexico --------> "+image);
+                                     System.out.println("\u005cn\u005cnErro lexico -------->  Linha "+ input_stream.getEndLine()+" Coluna "+ input_stream.getEndColumn()+" "+image+"\u005cn");
+                                     }
+| <INVALID_CONSTANTE_CHAR: "\'" ( ~["\"","\\","\n","\r"] | "\\" ( ["n","t","b","r","f","\\","\""] | ( ["\n","\r"] | "\r\n")))* "\'">{
+                                     System.out.println("Erro lexico: --------> "+image);
+                                     System.out.println("\u005cn\u005cnErro lexico: --------> "+image);
+                                     }
+
+}
+
+
+
+
+void LCage () :
+{}
+{ 
+
+	Main() 
+	(Func())*
+	<EOF> 
+}
+	
+
+void Main ():
+{}
+{
+ <MAIN> <ACHAVES> 
+ 
+ VarDecl()
+ SeqComandos()
+
+ <FCHAVES>
+
+}
+
+void Atribuicao():
+{}
+{
+	 Atribuicao2()
+	 | <PTOVIRGULA> 
+}
+
+
+
+
+
+void Mdeclaracao():
+{}
+{
+ <VIRGULA> <TOKEN_ID> Atribuicao()
+}
+
+
+void Atribuicao2():
+{}
+{
+ Mdeclaracao()| <VIRGULA> <TOKEN_ID> <ATRIB> Exp() Atribuicao()|<ATRIB> Exp() <PTOVIRGULA>
+}
+
+
+
+
+void VarDecl ():
+{}
+{
+	(<VAR> Tipo() <TOKEN_ID> Atribuicao())* 
+}
+
+void Tipo ():
+{}
+{
+	<INT> | <BOOL> | <FLOAT>
+}
+
+void SeqComandos ():
+{}
+{
+	(Comando())*
+}
+
+void Comando ():
+{}
+{
+	<TOKEN_ID> Comando2() | <IF> <APARENT> Exp() <FPARENT> <ACHAVES> SeqComandos() <FCHAVES> <PTOVIRGULA> 
+						| <WHILE> <APARENT> Exp() <FPARENT> <DO> <ACHAVES> SeqComandos() <FCHAVES> <PTOVIRGULA>
+						| <DO> <ACHAVES> SeqComandos() <FCHAVES> <WHILE> <APARENT> Exp() <FPARENT> <PTOVIRGULA>
+						| <RETURN> Exp() <PTOVIRGULA>
+						| <PRINT> <APARENT> Exp() <FPARENT> <PTOVIRGULA>
+
+}
+
+void Comando2 ():
+{}
+{
+	<ATRIB> Exp() <PTOVIRGULA> | <APARENT> ( ListaExp() )? <FPARENT> <PTOVIRGULA>
+}
+
+void Exp():
+{}
+{
+	<APARENT> Exp() <OP> Exp() <FPARENT> | Fator()
+}
+
+void Fator():
+{}
+{
+	<TOKEN_ID> ( <APARENT> ( ListaExp() )? <FPARENT> )? | <TOKEN_NUMLIT> | <TRUE> | <FALSE>
+}
+
+void ListaExp():
+{}
+{
+	Exp() ListaExp2()
+}
+
+void ListaExp2():
+{}
+{
+	(<VIRGULA> Exp() ListaExp2())?
+}
+
+void Func():
+{}
+{
+	<FUNCAO> Tipo() <TOKEN_ID> <APARENT> ( ListaArg() )? <FPARENT> <ACHAVES> VarDecl() SeqComandos() <FCHAVES>
+}
+
+void ListaArg():
+{}
+{
+	Tipo() <TOKEN_ID> ListaArg2()
+}
+
+void ListaArg2():
+{}
+{
+	(<VIRGULA> Tipo() <TOKEN_ID> ListaArg2())?
+}
