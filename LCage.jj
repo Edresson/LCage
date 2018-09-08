@@ -155,28 +155,15 @@ void Main ():
 void Atribuicao():
 {}
 {
-	 Atribuicao2()
-	 | <PTOVIRGULA> 
+	 Comando2()
+	 | <PTOVIRGULA>  
 }
-
-
-
-
 
 void Mdeclaracao():
 {}
 {
  <VIRGULA> <TOKEN_ID> Atribuicao()
 }
-
-
-void Atribuicao2():
-{}
-{
- Mdeclaracao()| <VIRGULA> <TOKEN_ID> <ATRIB> Exp() Atribuicao()|<ATRIB> Exp() <PTOVIRGULA>
-}
-
-
 
 
 void VarDecl ():
@@ -211,9 +198,15 @@ void Comando ():
 void Comando2 ():
 {}
 {
-	<ATRIB> Exp() <PTOVIRGULA> | <APARENT> ( ListaExp() )? <FPARENT> <PTOVIRGULA>
+	<ATRIB> Exp() teste ()  | <APARENT> ( ListaExp() )? <FPARENT> <PTOVIRGULA>| Mdeclaracao() 
 }
 
+
+void teste ():
+{}
+{
+	 Mdeclaracao() | <PTOVIRGULA>
+}	
 void Exp():
 {}
 {

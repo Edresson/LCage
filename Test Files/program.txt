@@ -11,7 +11,8 @@ main {
 	cage icage b ,c;
 	cage icage op ;
 	// variavel tipo float
-	//cage fcage g:=1,b:=1; //falta isso
+	cage fcage g:=1,b:=1; 
+	cage fcage a ;
 
 	//variaveis tipo bool 
 	cage bcage teste;
