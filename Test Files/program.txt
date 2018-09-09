@@ -10,10 +10,10 @@ main {
 	cage icage a;
 	cage icage b ,c;
 	cage icage op ;
-	// variavel tipo float
-	cage fcage g:=1,b:=1; 
-	cage fcage a ;
-
+	// variaveis tipo float
+	cage fcage g:=1,b:=1,c:=3; 
+	cage fcage a_b_a ;
+	cage fcage a_b;
 	//variaveis tipo bool 
 	cage bcage teste;
 	cage bcage teste1:=true;
@@ -29,9 +29,20 @@ main {
 	if ((1 < 3)) {
 		a := ola() ;
 	} ;
+	if ((1 ! 3)) {
+		a := ola() ;
+	} ;
+
+	if ((1 <= 3)) {
+		a := ola() ;
+	} ;
+
+	if ((1 >= 3)) {
+		a := ola() ;
+	} ;
 
 	// while 
-	ncage ((b == a)) do { 
+	ncage ((b == a)) { 
 		print (a) ;
 	} ;
 	// do while

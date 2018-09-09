@@ -82,7 +82,8 @@ TOKEN :
 
 TOKEN :
 {
- <OP: ("+" | "-" | "*" | "/" | "&&" | "||" | "<" | ">" | "==")>
+ <OP: ("+" | "-" | "*" | "/" )>
+|<OPL: ( "<" | ">" | "=="| "<="| ">=" |"!")>
 |<#LETRA: ["a"-"z","A"-"Z"]> 
 |<#DIGITO: ["0"-"9"]>
 |<#DIGITOS: <DIGITO>(<DIGITO>)*>
@@ -90,7 +91,7 @@ TOKEN :
 |<#FSUB: ("_"(<LD>)+)>
 |<#FOP: ("."<DIGITOS>)?>
 |<#EXPOP: ("E"("+"|"-")?<DIGITOS>)?>
-|<TOKEN_ID: <LETRA>(<LD>)*(<FSUB>)*>
+|<IDENTIFICADOR: <LETRA>(<LD>)*(<FSUB>)*>
 |<TOKEN_NUMLIT: <DIGITOS><FOP><EXPOP>>
 }
 
@@ -155,21 +156,21 @@ void Main ():
 void Atribuicao():
 {}
 {
-	 Comando2()
+	 Atribuir()
 	 | <PTOVIRGULA>  
 }
 
 void Mdeclaracao():
 {}
 {
- <VIRGULA> <TOKEN_ID> Atribuicao()
+ <VIRGULA> <IDENTIFICADOR> Atribuicao()
 }
 
 
 void VarDecl ():
 {}
 {
-	(<VAR> Tipo() <TOKEN_ID> Atribuicao())* 
+	(<VAR> Tipo() <IDENTIFICADOR> Atribuicao())* 
 }
 
 void Tipo ():
@@ -187,26 +188,27 @@ void SeqComandos ():
 void Comando ():
 {}
 {
-	<TOKEN_ID> Comando2() | <IF> <APARENT> Exp() <FPARENT> <ACHAVES> SeqComandos() <FCHAVES> <PTOVIRGULA> 
-						| <WHILE> <APARENT> Exp() <FPARENT> <DO> <ACHAVES> SeqComandos() <FCHAVES> <PTOVIRGULA>
-						| <DO> <ACHAVES> SeqComandos() <FCHAVES> <WHILE> <APARENT> Exp() <FPARENT> <PTOVIRGULA>
+	<IDENTIFICADOR> Atribuir() | <IF> <APARENT> Exp_logicas() <FPARENT> <ACHAVES> SeqComandos() <FCHAVES> <PTOVIRGULA> 
+						| <WHILE> <APARENT> Exp_logicas() <FPARENT> <ACHAVES> SeqComandos() <FCHAVES> <PTOVIRGULA>
+						| <DO> <ACHAVES> SeqComandos() <FCHAVES> <WHILE> <APARENT> Exp_logicas() <FPARENT> <PTOVIRGULA>
 						| <RETURN> Exp() <PTOVIRGULA>
 						| <PRINT> <APARENT> Exp() <FPARENT> <PTOVIRGULA>
 
 }
 
-void Comando2 ():
+void Atribuir ():
 {}
 {
-	<ATRIB> Exp() teste ()  | <APARENT> ( ListaExp() )? <FPARENT> <PTOVIRGULA>| Mdeclaracao() 
+	<ATRIB> Exp() Loop()  | <APARENT> ( ListaExp() )? <FPARENT> <PTOVIRGULA>| Mdeclaracao() 
 }
 
 
-void teste ():
+void Loop():
 {}
 {
 	 Mdeclaracao() | <PTOVIRGULA>
 }	
+// expressões 
 void Exp():
 {}
 {
@@ -216,7 +218,7 @@ void Exp():
 void Fator():
 {}
 {
-	<TOKEN_ID> ( <APARENT> ( ListaExp() )? <FPARENT> )? | <TOKEN_NUMLIT> | <TRUE> | <FALSE>
+	<IDENTIFICADOR> ( <APARENT> ( ListaExp() )? <FPARENT> )? | <TOKEN_NUMLIT> | <TRUE> | <FALSE>
 }
 
 void ListaExp():
@@ -230,21 +232,48 @@ void ListaExp2():
 {
 	(<VIRGULA> Exp() ListaExp2())?
 }
+// expressões logicas
+void Exp_logicas():
+{}
+{
+	<APARENT> Exp_logicas() <OPL> Exp_logicas() <FPARENT> | Fator_logico()
+}
+
+void Fator_logico():
+{}
+{
+	<IDENTIFICADOR> ( <APARENT> ( ListaExp_logico() )? <FPARENT> )? | <TOKEN_NUMLIT> | <TRUE> | <FALSE>
+}
+
+
+void ListaExp_logico():
+{}
+{
+	Exp_logicas() ListaExp2()
+}
+
+void ListaExp2_logico():
+{}
+{
+	(<VIRGULA> Exp_logicas() ListaExp2_logico())?
+}
+
+
 
 void Func():
 {}
 {
-	<FUNCAO> Tipo() <TOKEN_ID> <APARENT> ( ListaArg() )? <FPARENT> <ACHAVES> VarDecl() SeqComandos() <FCHAVES>
+	<FUNCAO> Tipo() <IDENTIFICADOR> <APARENT> ( ListaArg() )? <FPARENT> <ACHAVES> VarDecl() SeqComandos() <FCHAVES>
 }
 
 void ListaArg():
 {}
 {
-	Tipo() <TOKEN_ID> ListaArg2()
+	Tipo() <IDENTIFICADOR> ListaArg2()
 }
 
 void ListaArg2():
 {}
 {
-	(<VIRGULA> Tipo() <TOKEN_ID> ListaArg2())?
+	(<VIRGULA> Tipo() <IDENTIFICADOR> ListaArg2())?
 }
