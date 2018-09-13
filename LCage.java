@@ -56,8 +56,13 @@ public class LCage implements LCageConstants {
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
     case APARENT:
     case VIRGULA:
+<<<<<<< HEAD
     case ATRIB:{
       Comando2();
+=======
+    case ATRIB:
+      Atribuir();
+>>>>>>> 143af449108493c956a9a8f6d14f3488b8e013f1
       break;
       }
     case PTOVIRGULA:{
@@ -73,7 +78,7 @@ public class LCage implements LCageConstants {
 
   static final public void Mdeclaracao() throws ParseException {
     jj_consume_token(VIRGULA);
-    jj_consume_token(TOKEN_ID);
+    jj_consume_token(IDENTIFICADOR);
     Atribuicao();
   }
 
@@ -91,7 +96,7 @@ public class LCage implements LCageConstants {
       }
       jj_consume_token(VAR);
       Tipo();
-      jj_consume_token(TOKEN_ID);
+      jj_consume_token(IDENTIFICADOR);
       Atribuicao();
     }
   }
@@ -126,7 +131,11 @@ public class LCage implements LCageConstants {
       case DO:
       case RETURN:
       case PRINT:
+<<<<<<< HEAD
       case TOKEN_ID:{
+=======
+      case IDENTIFICADOR:
+>>>>>>> 143af449108493c956a9a8f6d14f3488b8e013f1
         ;
         break;
         }
@@ -139,16 +148,23 @@ public class LCage implements LCageConstants {
   }
 
   static final public void Comando() throws ParseException {
+<<<<<<< HEAD
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
     case TOKEN_ID:{
       jj_consume_token(TOKEN_ID);
       Comando2();
+=======
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case IDENTIFICADOR:
+      jj_consume_token(IDENTIFICADOR);
+      Atribuir();
+>>>>>>> 143af449108493c956a9a8f6d14f3488b8e013f1
       break;
       }
     case IF:{
       jj_consume_token(IF);
       jj_consume_token(APARENT);
-      Exp();
+      Exp_logicas();
       jj_consume_token(FPARENT);
       jj_consume_token(ACHAVES);
       SeqComandos();
@@ -159,9 +175,8 @@ public class LCage implements LCageConstants {
     case WHILE:{
       jj_consume_token(WHILE);
       jj_consume_token(APARENT);
-      Exp();
+      Exp_logicas();
       jj_consume_token(FPARENT);
-      jj_consume_token(DO);
       jj_consume_token(ACHAVES);
       SeqComandos();
       jj_consume_token(FCHAVES);
@@ -175,7 +190,7 @@ public class LCage implements LCageConstants {
       jj_consume_token(FCHAVES);
       jj_consume_token(WHILE);
       jj_consume_token(APARENT);
-      Exp();
+      Exp_logicas();
       jj_consume_token(FPARENT);
       jj_consume_token(PTOVIRGULA);
       break;
@@ -201,12 +216,18 @@ public class LCage implements LCageConstants {
     }
   }
 
+<<<<<<< HEAD
   static final public void Comando2() throws ParseException {
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
     case ATRIB:{
+=======
+  static final public void Atribuir() throws ParseException {
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case ATRIB:
+>>>>>>> 143af449108493c956a9a8f6d14f3488b8e013f1
       jj_consume_token(ATRIB);
       Exp();
-      teste();
+      Loop();
       break;
       }
     case APARENT:{
@@ -215,8 +236,13 @@ public class LCage implements LCageConstants {
       case APARENT:
       case TRUE:
       case FALSE:
+<<<<<<< HEAD
       case TOKEN_ID:
       case TOKEN_NUMLIT:{
+=======
+      case IDENTIFICADOR:
+      case TOKEN_NUMLIT:
+>>>>>>> 143af449108493c956a9a8f6d14f3488b8e013f1
         ListaExp();
         break;
         }
@@ -239,9 +265,15 @@ public class LCage implements LCageConstants {
     }
   }
 
+<<<<<<< HEAD
   static final public void teste() throws ParseException {
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
     case VIRGULA:{
+=======
+  static final public void Loop() throws ParseException {
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case VIRGULA:
+>>>>>>> 143af449108493c956a9a8f6d14f3488b8e013f1
       Mdeclaracao();
       break;
       }
@@ -256,6 +288,7 @@ public class LCage implements LCageConstants {
     }
   }
 
+// expressões 
   static final public void Exp() throws ParseException {
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
     case APARENT:{
@@ -268,8 +301,13 @@ public class LCage implements LCageConstants {
       }
     case TRUE:
     case FALSE:
+<<<<<<< HEAD
     case TOKEN_ID:
     case TOKEN_NUMLIT:{
+=======
+    case IDENTIFICADOR:
+    case TOKEN_NUMLIT:
+>>>>>>> 143af449108493c956a9a8f6d14f3488b8e013f1
       Fator();
       break;
       }
@@ -281,18 +319,31 @@ public class LCage implements LCageConstants {
   }
 
   static final public void Fator() throws ParseException {
+<<<<<<< HEAD
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
     case TOKEN_ID:{
       jj_consume_token(TOKEN_ID);
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
       case APARENT:{
+=======
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case IDENTIFICADOR:
+      jj_consume_token(IDENTIFICADOR);
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case APARENT:
+>>>>>>> 143af449108493c956a9a8f6d14f3488b8e013f1
         jj_consume_token(APARENT);
         switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
         case APARENT:
         case TRUE:
         case FALSE:
+<<<<<<< HEAD
         case TOKEN_ID:
         case TOKEN_NUMLIT:{
+=======
+        case IDENTIFICADOR:
+        case TOKEN_NUMLIT:
+>>>>>>> 143af449108493c956a9a8f6d14f3488b8e013f1
           ListaExp();
           break;
           }
@@ -347,10 +398,93 @@ public class LCage implements LCageConstants {
     }
   }
 
+// expressões logicas
+  static final public void Exp_logicas() throws ParseException {
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case APARENT:
+      jj_consume_token(APARENT);
+      Exp_logicas();
+      jj_consume_token(OPL);
+      Exp_logicas();
+      jj_consume_token(FPARENT);
+      break;
+    case TRUE:
+    case FALSE:
+    case IDENTIFICADOR:
+    case TOKEN_NUMLIT:
+      Fator_logico();
+      break;
+    default:
+      jj_la1[14] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
+  }
+
+  static final public void Fator_logico() throws ParseException {
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case IDENTIFICADOR:
+      jj_consume_token(IDENTIFICADOR);
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case APARENT:
+        jj_consume_token(APARENT);
+        switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+        case APARENT:
+        case TRUE:
+        case FALSE:
+        case IDENTIFICADOR:
+        case TOKEN_NUMLIT:
+          ListaExp_logico();
+          break;
+        default:
+          jj_la1[15] = jj_gen;
+          ;
+        }
+        jj_consume_token(FPARENT);
+        break;
+      default:
+        jj_la1[16] = jj_gen;
+        ;
+      }
+      break;
+    case TOKEN_NUMLIT:
+      jj_consume_token(TOKEN_NUMLIT);
+      break;
+    case TRUE:
+      jj_consume_token(TRUE);
+      break;
+    case FALSE:
+      jj_consume_token(FALSE);
+      break;
+    default:
+      jj_la1[17] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
+  }
+
+  static final public void ListaExp_logico() throws ParseException {
+    Exp_logicas();
+    ListaExp2();
+  }
+
+  static final public void ListaExp2_logico() throws ParseException {
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case VIRGULA:
+      jj_consume_token(VIRGULA);
+      Exp_logicas();
+      ListaExp2_logico();
+      break;
+    default:
+      jj_la1[18] = jj_gen;
+      ;
+    }
+  }
+
   static final public void Func() throws ParseException {
     jj_consume_token(FUNCAO);
     Tipo();
-    jj_consume_token(TOKEN_ID);
+    jj_consume_token(IDENTIFICADOR);
     jj_consume_token(APARENT);
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
     case INT:
@@ -360,7 +494,7 @@ public class LCage implements LCageConstants {
       break;
       }
     default:
-      jj_la1[14] = jj_gen;
+      jj_la1[19] = jj_gen;
       ;
     }
     jj_consume_token(FPARENT);
@@ -372,7 +506,7 @@ public class LCage implements LCageConstants {
 
   static final public void ListaArg() throws ParseException {
     Tipo();
-    jj_consume_token(TOKEN_ID);
+    jj_consume_token(IDENTIFICADOR);
     ListaArg2();
   }
 
@@ -381,12 +515,12 @@ public class LCage implements LCageConstants {
     case VIRGULA:{
       jj_consume_token(VIRGULA);
       Tipo();
-      jj_consume_token(TOKEN_ID);
+      jj_consume_token(IDENTIFICADOR);
       ListaArg2();
       break;
       }
     default:
-      jj_la1[15] = jj_gen;
+      jj_la1[20] = jj_gen;
       ;
     }
   }
@@ -401,7 +535,7 @@ public class LCage implements LCageConstants {
   static public Token jj_nt;
   static private int jj_ntk;
   static private int jj_gen;
-  static final private int[] jj_la1 = new int[16];
+  static final private int[] jj_la1 = new int[21];
   static private int[] jj_la1_0;
   static private int[] jj_la1_1;
   static {
@@ -409,10 +543,10 @@ public class LCage implements LCageConstants {
       jj_la1_init_1();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x100000,0xc004800,0x2000,0xe00000,0xf8000,0xf8000,0x3000800,0xc000800,0x4004000,0x3000800,0x3000800,0x800,0x3000000,0x4000000,0xe00000,0x4000000,};
+      jj_la1_0 = new int[] {0x100000,0xc004800,0x2000,0xe00000,0xf8000,0xf8000,0x3000800,0xc000800,0x4004000,0x3000800,0x3000800,0x800,0x3000000,0x4000000,0x3000800,0x3000800,0x800,0x3000000,0x4000000,0xe00000,0x4000000,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0x0,0x0,0x0,0x0,0x10,0x10,0x30,0x0,0x0,0x30,0x30,0x0,0x30,0x0,0x0,0x0,};
+      jj_la1_1 = new int[] {0x0,0x0,0x0,0x0,0x20,0x20,0x60,0x0,0x0,0x60,0x60,0x0,0x60,0x0,0x60,0x60,0x0,0x60,0x0,0x0,0x0,};
    }
 
   /** Constructor with InputStream. */
@@ -433,7 +567,7 @@ public class LCage implements LCageConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 16; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 21; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -447,7 +581,7 @@ public class LCage implements LCageConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 16; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 21; i++) jj_la1[i] = -1;
   }
 
   /** Constructor. */
@@ -464,7 +598,7 @@ public class LCage implements LCageConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 16; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 21; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -474,7 +608,7 @@ public class LCage implements LCageConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 16; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 21; i++) jj_la1[i] = -1;
   }
 
   /** Constructor with generated Token Manager. */
@@ -490,7 +624,7 @@ public class LCage implements LCageConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 16; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 21; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -499,7 +633,7 @@ public class LCage implements LCageConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 16; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 21; i++) jj_la1[i] = -1;
   }
 
   static private Token jj_consume_token(int kind) throws ParseException {
@@ -550,12 +684,12 @@ public class LCage implements LCageConstants {
   /** Generate ParseException. */
   static public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[42];
+    boolean[] la1tokens = new boolean[43];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 16; i++) {
+    for (int i = 0; i < 21; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {
@@ -567,7 +701,7 @@ public class LCage implements LCageConstants {
         }
       }
     }
-    for (int i = 0; i < 42; i++) {
+    for (int i = 0; i < 43; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;

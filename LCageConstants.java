@@ -57,31 +57,33 @@ public interface LCageConstants {
   /** RegularExpression Id. */
   int OP = 28;
   /** RegularExpression Id. */
-  int LETRA = 29;
+  int OPL = 29;
   /** RegularExpression Id. */
-  int DIGITO = 30;
+  int LETRA = 30;
   /** RegularExpression Id. */
-  int DIGITOS = 31;
+  int DIGITO = 31;
   /** RegularExpression Id. */
-  int LD = 32;
+  int DIGITOS = 32;
   /** RegularExpression Id. */
-  int FSUB = 33;
+  int LD = 33;
   /** RegularExpression Id. */
-  int FOP = 34;
+  int FSUB = 34;
   /** RegularExpression Id. */
-  int EXPOP = 35;
+  int FOP = 35;
   /** RegularExpression Id. */
-  int TOKEN_ID = 36;
+  int EXPOP = 36;
   /** RegularExpression Id. */
-  int TOKEN_NUMLIT = 37;
+  int IDENTIFICADOR = 37;
   /** RegularExpression Id. */
-  int ID_INVALIDO = 38;
+  int TOKEN_NUMLIT = 38;
   /** RegularExpression Id. */
-  int INVALIDO_LEXICO = 39;
+  int ID_INVALIDO = 39;
   /** RegularExpression Id. */
-  int INVALID_CONST = 40;
+  int INVALIDO_LEXICO = 40;
   /** RegularExpression Id. */
-  int INVALID_CONSTANTE_CHAR = 41;
+  int INVALID_CONST = 41;
+  /** RegularExpression Id. */
+  int INVALID_CONSTANTE_CHAR = 42;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -117,6 +119,7 @@ public interface LCageConstants {
     "\",\"",
     "\":=\"",
     "<OP>",
+    "<OPL>",
     "<LETRA>",
     "<DIGITO>",
     "<DIGITOS>",
@@ -124,7 +127,7 @@ public interface LCageConstants {
     "<FSUB>",
     "<FOP>",
     "<EXPOP>",
-    "<TOKEN_ID>",
+    "<IDENTIFICADOR>",
     "<TOKEN_NUMLIT>",
     "<ID_INVALIDO>",
     "<INVALIDO_LEXICO>",
