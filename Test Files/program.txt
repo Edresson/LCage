@@ -1,4 +1,4 @@
-main {
+﻿main {
 	// comentario de linha
     /* comentario
 	de
@@ -19,25 +19,25 @@ main {
 	cage bcage teste1:=true;
 	cage bcage teste2:=false;
 
-	test := true ;
-	teste := false;
+	test := trucage ;
+	teste := falcage;
 	//soma
 	a := (1 + 1) ;
 	//subtração
 	b := 2.23E-23 ;
 	// condicional 
-	if ((1 < 3)) {
+	cageif ((1 < 3)) {
 		a := ola() ;
 	} ;
-	if ((1 ! 3)) {
-		a := ola() ;
-	} ;
-
-	if ((1 <= 3)) {
+	cageif ((1 ! 3)) {
 		a := ola() ;
 	} ;
 
-	if ((1 >= 3)) {
+	cageif ((1 <= 3)) {
+		a := ola() ;
+	} ;
+
+	cageif ((1 >= 3)) {
 		a := ola() ;
 	} ;
 
@@ -46,12 +46,12 @@ main {
 		print (a) ;
 	} ;
 	// do while
-	do {
+	docage {
 		print(b);
 	} ncage((a == c));
 }
 //declaração de função
 funCage icage compiladores (icage a , bcage b , fcage c) {
 	cage icage variavel_funcao ;
-	return variavel_funcao ;
+	recage variavel_funcao ;
 } 

@@ -66,17 +66,17 @@ TOKEN :
 | <FPARENT: ")">
 | <VAR: "cage">
 | <PTOVIRGULA: ";">
-| <IF: "if">
+| <IF: "cageif">
 | <WHILE: "ncage">
-| <DO: "do">
-| <RETURN: "return">
-| <PRINT: "print">
+| <DO: "docage">
+| <RETURN: "recage">
+| <PRINT: "pricage">
 | <FUNCAO: "funCage">
 | <INT: "icage">
 | <FLOAT: "fcage">
 | <BOOL: "bcage">
-| <TRUE: "true">
-| <FALSE: "false">
+| <TRUE: "trucage">
+| <FALSE: "falcage">
 | <VIRGULA: ",">
 | <ATRIB: ":=">
 }

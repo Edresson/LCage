@@ -23,7 +23,7 @@ public static void main(String args[]) throws ParseException,IOException {
 	}
 	catch (Error e)
 	{
-		System.out.println(e.getMessage()); //Mensagem de erro l\u00e9xico (em ingles) mostrando linha e coluna
+		System.out.println(e.getMessage()); //Mensagem de erro l\u00c3\u00a9xico (em ingles) mostrando linha e coluna
 	}
 
 
@@ -70,17 +70,17 @@ TOKEN :
 | <FPARENT: ")">
 | <VAR: "cage">
 | <PTOVIRGULA: ";">
-| <IF: "if">
+| <IF: "cageif">
 | <WHILE: "ncage">
-| <DO: "do">
-| <RETURN: "return">
-| <PRINT: "print">
+| <DO: "docage">
+| <RETURN: "recage">
+| <PRINT: "pricage">
 | <FUNCAO: "funCage">
 | <INT: "icage">
 | <FLOAT: "fcage">
 | <BOOL: "bcage">
-| <TRUE: "true">
-| <FALSE: "false">
+| <TRUE: "trucage">
+| <FALSE: "falcage">
 | <VIRGULA: ",">
 | <ATRIB: ":=">
 }
@@ -465,7 +465,7 @@ void Loop():
          }
 /*@egen*/
 }	
-// express\u00f5es 
+// express\u00c3\u00b5es 
 void Exp():
 {/*@bgen(jjtree) Exp */
   SimpleNode jjtn000 = new SimpleNode(JJTEXP);
@@ -593,7 +593,7 @@ void ListaExp2():
         }
 /*@egen*/
 }
-// express\u00f5es logicas
+// express\u00c3\u00b5es logicas
 void Exp_logicas():
 {/*@bgen(jjtree) Exp_logicas */
   SimpleNode jjtn000 = new SimpleNode(JJTEXP_LOGICAS);
