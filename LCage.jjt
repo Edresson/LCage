@@ -101,11 +101,19 @@ TOKEN :
 
 // TRATANDO OS ERROS LEXICOS ENCONTRADOS
 SPECIAL_TOKEN : {
- <ID_INVALIDO: ("@" | "!" | "#" | "*" | "-" | "+" "=" | "&" | <DIGITO>)(<LETRA>|<DIGITO> | "_" | "@")*>{
-                                     System.out.println("IDENTIFICADOR: "+image);
-                                     countLexError++;
-                                     System.out.println("\u005cn\u005cnErro lexico -------->  Linha "+ input_stream.getEndLine()+" Coluna "+ input_stream.getEndColumn()+" "+image +"\u005cn");
-                                     }
+	<ID_INVALIDO: ("@" | "!" | "#" | "*" | "-" | "+" "=" | "&" | <DIGITO>)(<LETRA>|<DIGITO> | "_" | "@")*>{
+		System.out.println("IDENTIFICADOR: "+image);
+		countLexError++;
+		System.out.println(
+			"\u005cn\u005cnErro lexico -------->  Linha "+
+			 input_stream.getEndLine()+
+			 " Coluna "+ 
+			 input_stream.getEndColumn()+
+			 " "+
+			 image+
+			 "\u005cn"
+		);
+	}
 |
 <INVALIDO_LEXICO: 
 (~["a"-"z",
@@ -238,37 +246,42 @@ void SeqComandos ():
 void Comando ():
 {}
 {
-	<IDENTIFICADOR> Atribuir() 
-						| <IF> <APARENT> Exp_logicas() <FPARENT> 
-							<ACHAVES> 
-								SeqComandos() 
-							<FCHAVES> <PTOVIRGULA>
+		<IDENTIFICADOR> Atribuir() 
+		| <IF> <APARENT> Exp_logicas() <FPARENT> 
+			<ACHAVES> 
+				SeqComandos() 
+			<FCHAVES> <PTOVIRGULA>
 
-						| <IF> <APARENT> Exp_logicas() <FPARENT> 
-							<ACHAVES> 
-								SeqComandos() 
-							<FCHAVES><ELSE>
-							<ACHAVES>
-								Ifelse()
-							<FCHAVES><PTOVIRGULA> 
+		| <IF> <APARENT> Exp_logicas() <FPARENT> 
+			<ACHAVES> 
+				SeqComandos() 
+			<FCHAVES><ELSE>
+			<ACHAVES>
+				Ifelse()
+			<FCHAVES><PTOVIRGULA> 
 
-						| <WHILE> <APARENT> Exp_logicas() <FPARENT> 
-						<ACHAVES> 
-							SeqComandos() 
-						<FCHAVES> <PTOVIRGULA>
+		| <WHILE> <APARENT> Exp_logicas() <FPARENT> 
+		<ACHAVES> 
+			SeqComandos() 
+		<FCHAVES> <PTOVIRGULA>
 
-						| <DO> <ACHAVES> 
-							SeqComandos() 
-						<FCHAVES> <WHILE> <APARENT> Exp_logicas() <FPARENT> <PTOVIRGULA>
-                                               
-						| <RETURN> Exp() <PTOVIRGULA>
+		| <DO> <ACHAVES> 
+			SeqComandos() 
+		<FCHAVES> <WHILE> <APARENT> Exp_logicas() <FPARENT> <PTOVIRGULA>
+								
+		| <RETURN> Exp() <PTOVIRGULA>
 
-						| <PRINT> <APARENT> Exp() <FPARENT> <PTOVIRGULA>
+		| <PRINT> <APARENT> Exp() <FPARENT> <PTOVIRGULA>
 
 }
 //função recursiva para auxiliar a chamada de vários if else                                                       
 void Ifelse():
 {}{
+	<IF> <APARENT> Exp_logicas() <FPARENT> 
+	<ACHAVES> 
+		SeqComandos() 
+	<FCHAVES><PTOVIRGULA>
+	
 	|<IF> <APARENT> Exp_logicas() <FPARENT> 
 	<ACHAVES> 
 		SeqComandos() 
