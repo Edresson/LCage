@@ -67,6 +67,7 @@ TOKEN :
 | <VAR: "cage">
 | <PTOVIRGULA: ";">
 | <IF: "cageif">
+| <ELSE: "elcages">
 | <WHILE: "ncage">
 | <DO: "docage">
 | <RETURN: "recage">
@@ -237,16 +238,47 @@ void SeqComandos ():
 void Comando ():
 {}
 {
-	<IDENTIFICADOR> Atribuir() | <IF> <APARENT> Exp_logicas() <FPARENT> <ACHAVES> SeqComandos() <FCHAVES> <PTOVIRGULA> 
-						| <WHILE> <APARENT> Exp_logicas() <FPARENT> <ACHAVES> SeqComandos() <FCHAVES> <PTOVIRGULA>
-						| <DO> <ACHAVES> SeqComandos() <FCHAVES> <WHILE> <APARENT> Exp_logicas() <FPARENT> <PTOVIRGULA>
+	<IDENTIFICADOR> Atribuir() 
+						| <IF> <APARENT> Exp_logicas() <FPARENT> 
+							<ACHAVES> 
+								SeqComandos() 
+							<FCHAVES> <PTOVIRGULA>
+
+						| <IF> <APARENT> Exp_logicas() <FPARENT> 
+							<ACHAVES> 
+								SeqComandos() 
+							<FCHAVES><ELSE>
+							<ACHAVES>
+								Ifelse()
+							<FCHAVES><PTOVIRGULA> 
+
+						| <WHILE> <APARENT> Exp_logicas() <FPARENT> 
+						<ACHAVES> 
+							SeqComandos() 
+						<FCHAVES> <PTOVIRGULA>
+
+						| <DO> <ACHAVES> 
+							SeqComandos() 
+						<FCHAVES> <WHILE> <APARENT> Exp_logicas() <FPARENT> <PTOVIRGULA>
+
 						| <RETURN> Exp() <PTOVIRGULA>
+
 						| <PRINT> <APARENT> Exp() <FPARENT> <PTOVIRGULA>
 
 }
+//função recursiva para auxiliar a chamada de vários if else
+void Ifelse():
+{}{
+	|<IF> <APARENT> Exp_logicas() <FPARENT> 
+	<ACHAVES> 
+		SeqComandos() 
+	<FCHAVES> <ELSE>
+	<ACHAVES>
+		Ifelse()
+	<FCHAVES>
 
-
-
+	| SeqComandos()
+}
 
 
 //  uma expressão logica entre parenteses ou deriva em Fator_logico
