@@ -59,42 +59,42 @@ SKIP :
 
 TOKEN :
 {
-  <MAIN: "main">
-| <ACHAVES: "{">
-| <FCHAVES: "}">
-| <APARENT: "(">
-| <FPARENT: ")">
-| <VAR: "cage">
-| <PTOVIRGULA: ";">
-| <IF: "cageif">
-| <ELSE: "elcages">
-| <WHILE: "ncage">
-| <DO: "docage">
-| <RETURN: "recage">
-| <PRINT: "pricage">
-| <FUNCAO: "funCage">
-| <INT: "icage">
-| <FLOAT: "fcage">
-| <BOOL: "bcage">
-| <TRUE: "trucage">
-| <FALSE: "falcage">
-| <VIRGULA: ",">
-| <ATRIB: ":=">
+  <      MAIN: 	"main"		>
+| <	  ACHAVES: 	"{"			>
+| <	  FCHAVES: 	"}"			>
+| <	  APARENT: 	"("			>
+| <	  FPARENT: 	")"			>
+| <	      VAR: 	"cage"		>
+| <PTOVIRGULA: 	";"			>
+| <		   IF: 	"cageif"	>
+| <		 ELSE: 	"elcages"	>
+| <		WHILE: 	"ncage"		>	
+| <		   DO: 	"docage"	>
+| <    RETURN: 	"recage"	>
+| <     PRINT: 	"pricage"	>
+| <    FUNCAO:  "funCage"	>
+| <		  INT:  "icage"		>
+| <     FLOAT: 	"fcage"		>
+| <      BOOL:  "bcage"		>
+| <		 TRUE: 	"trucage"	>
+| <		FALSE: 	"falcage"	>
+| <	  VIRGULA: 	","			>
+| <		ATRIB: 	":="		>
 }
 
 TOKEN :
 {
- <OP: ("+" | "-" | "*" | "/" )>
-|<OPL: ( "<" | ">" | "=="| "<="| ">=" |"!")>
-|<#LETRA: ["a"-"z","A"-"Z"]> 
-|<#DIGITO: ["0"-"9"]>
-|<#DIGITOS: <DIGITO>(<DIGITO>)*>
-|<#LD: <LETRA> | <DIGITO>>
-|<#FSUB: ("_"(<LD>)+)>
-|<#FOP: ("."<DIGITOS>)?>
-|<#EXPOP: ("E"("+"|"-")?<DIGITOS>)?>
-|<IDENTIFICADOR: <LETRA>(<LD>)*(<FSUB>)*>
-|<TOKEN_NUMLIT: <DIGITOS><FOP><EXPOP>>
+ <			 OP: ("+" | "-" | "*" | "/" )					>
+|<		    OPL: ( "<" | ">" | "=="| "<="| ">=" |"!")		>
+|<		 #LETRA: ["a"-"z","A"-"Z"]							> 
+|<	    #DIGITO: ["0"-"9"]									>
+|<	   #DIGITOS: <DIGITO> (<DIGITO>)*						>
+|<		    #LD: <LETRA> | <DIGITO>							>
+|<		  #FSUB: ("_"(<LD>)+)								>
+|<		   #FOP: ("."<DIGITOS>)?							>
+|<		 #EXPOP: ("E"("+" | "-")?<DIGITOS>)?				>
+|<IDENTIFICADOR: <LETRA>(<LD>)*(<FSUB>)*					>
+|< TOKEN_NUMLIT: <DIGITOS><FOP><EXPOP>						>
 }
 
 
@@ -260,13 +260,13 @@ void Comando ():
 						| <DO> <ACHAVES> 
 							SeqComandos() 
 						<FCHAVES> <WHILE> <APARENT> Exp_logicas() <FPARENT> <PTOVIRGULA>
-
+                                               
 						| <RETURN> Exp() <PTOVIRGULA>
 
 						| <PRINT> <APARENT> Exp() <FPARENT> <PTOVIRGULA>
 
 }
-//função recursiva para auxiliar a chamada de vários if else
+//função recursiva para auxiliar a chamada de vários if else                                                       
 void Ifelse():
 {}{
 	|<IF> <APARENT> Exp_logicas() <FPARENT> 
