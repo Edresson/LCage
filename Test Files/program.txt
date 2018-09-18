@@ -1,4 +1,4 @@
-﻿main {
+﻿main{
 	// comentario de linha
     /* comentario
 	de
