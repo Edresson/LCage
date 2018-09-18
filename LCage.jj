@@ -23,7 +23,7 @@ public static void main(String args[]) throws ParseException,IOException {
 	}
 	catch (Error e)
 	{
-		System.out.println(e.getMessage()); //Mensagem de erro l\u00c3\u00a9xico (em ingles) mostrando linha e coluna
+		System.out.println(e.getMessage()); //Mensagem de erro l\u00e9xico (em ingles) mostrando linha e coluna
 	}
 
 
@@ -185,7 +185,7 @@ SimpleNode LCage () :
 /*@egen*/
 }
 	
-// Define a fun\u00c3\u00a7\u00c3\u00a3o main do programa
+// Define a fun\u00e7\u00e3o main do programa
 void Main ():
 {/*@bgen(jjtree) Main */
   SimpleNode jjtn000 = new SimpleNode(JJTMAIN);
@@ -224,7 +224,7 @@ void Main ():
 
 }
 
-//Declara\u00c3\u00a7\u00c3\u00b5es de variaveis
+//Declara\u00e7\u00f5es de variaveis
 void VarDecl ():
 {/*@bgen(jjtree) VarDecl */
   SimpleNode jjtn000 = new SimpleNode(JJTVARDECL);
@@ -309,7 +309,7 @@ void Atribuicao():
 /*@egen*/  
 }
 
-// Atribui  uma express\u00c3\u00a3o a uma variavel, uma express\u00c3\u00a3o  (( 1+1 )), ou deriva em Mdeclaracao permitindo  multiplas declara\u00c3\u00a7\u00c3\u00b5es
+// Atribui  uma express\u00e3o a uma variavel, uma express\u00e3o  (( 1+1 )), ou deriva em Mdeclaracao permitindo  multiplas declara\u00e7\u00f5es
 void Atribuir ():
 {/*@bgen(jjtree) Atribuir */
   SimpleNode jjtn000 = new SimpleNode(JJTATRIBUIR);
@@ -342,7 +342,7 @@ void Atribuir ():
 /*@egen*/ 
 }
 
-// Adiciona virgula a atribuicao permitindo multipla declara\u00c3\u00a7\u00c3\u00a3o do tipo: var fcage a,b,c;
+// Adiciona virgula a atribuicao permitindo multipla declara\u00e7\u00e3o do tipo: var fcage a,b,c;
 void Mdeclaracao():
 {/*@bgen(jjtree) Mdeclaracao */
   SimpleNode jjtn000 = new SimpleNode(JJTMDECLARACAO);
@@ -409,7 +409,7 @@ void Loop():
 }	
 
 
-// uma express\u00c3\u00a3o matematica entre parenteses ou deriva em Fator
+// uma express\u00e3o matematica entre parenteses ou deriva em Fator
 void Exp():
 {/*@bgen(jjtree) Exp */
   SimpleNode jjtn000 = new SimpleNode(JJTEXP);
@@ -442,7 +442,7 @@ void Exp():
 /*@egen*/
 }
 
-// gera uma chamada de fun\u00c3\u00a7\u00c3\u00a3o ou  um numero ou  true ou false
+// gera uma chamada de fun\u00e7\u00e3o ou  um numero ou  true ou false
 void Fator():
 {/*@bgen(jjtree) Fator */
   SimpleNode jjtn000 = new SimpleNode(JJTFATOR);
@@ -507,7 +507,7 @@ void ListaExp():
 /*@egen*/
 }
 
-// permite usar virgula nos parametros das funcoes nas declara\u00c3\u00a7\u00c3\u00a3o exp: cage fcage b := func(a,b)
+// permite usar virgula nos parametros das funcoes nas declara\u00e7\u00e3o exp: cage fcage b := func(a,b)
 void ListaExp2():
 {/*@bgen(jjtree) ListaExp2 */
   SimpleNode jjtn000 = new SimpleNode(JJTLISTAEXP2);
@@ -541,7 +541,7 @@ void ListaExp2():
 }
 
 
-// ap\u00c3\u00b3s as declara\u00c3\u00a7\u00c3\u00b5es de variaveis usa-se essa fun\u00c3\u00a7\u00c3\u00a3o para criar os loops,condicionais entre outros.
+// ap\u00f3s as declara\u00e7\u00f5es de variaveis usa-se essa fun\u00e7\u00e3o para criar os loops,condicionais entre outros.
 void SeqComandos ():
 {/*@bgen(jjtree) SeqComandos */
   SimpleNode jjtn000 = new SimpleNode(JJTSEQCOMANDOS);
@@ -575,7 +575,7 @@ void SeqComandos ():
 }
 // pode-se atribuir um valor a uma variavel  ex: a := (1 + 1);
 //declarar estrutura condicional, comando de repeticao do tipo NCAGE, e do tipo DOCAGE
-// Retornar valor , e usar a fun\u00c3\u00a7\u00c3\u00a3o de mostrar na tela (PRINT)
+// Retornar valor , e usar a fun\u00e7\u00e3o de mostrar na tela (PRINT)
 void Comando ():
 {/*@bgen(jjtree) Comando */
   SimpleNode jjtn000 = new SimpleNode(JJTCOMANDO);
@@ -586,7 +586,7 @@ void Comando ():
                 try {
 /*@egen*/
 		<IDENTIFICADOR> Atribuir() 
-		| <IF> <APARENT> Exp_logicas() <FPARENT><ACHAVES>SeqComandos()<FCHAVES> <PTOVIRGULA>
+		| <IF> <APARENT> Exp_logicas() <FPARENT><ACHAVES>SeqComandos()<FCHAVES> (<ELSE> <ACHAVES>SeqComandos()<FCHAVES>)? <PTOVIRGULA>
 		
 		| <WHILE> <APARENT> Exp_logicas() <FPARENT><ACHAVES>SeqComandos()<FCHAVES> <PTOVIRGULA>
 		| <DO> <ACHAVES>SeqComandos()<FCHAVES> <WHILE> <APARENT> Exp_logicas() <FPARENT> <PTOVIRGULA>						
@@ -613,11 +613,11 @@ void Comando ():
                 }
 /*@egen*/
 }
-//fun\u00c3\u00a7\u00c3\u00a3o recursiva para auxiliar a chamada de v\u00c3\u00a1rios if else                                                       
+//fun\u00e7\u00e3o recursiva para auxiliar a chamada de v\u00e1rios if else                                                       
 
 
 
-//  uma express\u00c3\u00a3o logica entre parenteses ou deriva em Fator_logico
+//  uma express\u00e3o logica entre parenteses ou deriva em Fator_logico
 void Exp_logicas():
 {/*@bgen(jjtree) Exp_logicas */
   SimpleNode jjtn000 = new SimpleNode(JJTEXP_LOGICAS);
@@ -672,7 +672,7 @@ void Fator_logico():
 
 
 
-//declara fun\u00c3\u00a7\u00c3\u00b5es
+//declara fun\u00e7\u00f5es
 void Func():
 {/*@bgen(jjtree) Func */
   SimpleNode jjtn000 = new SimpleNode(JJTFUNC);
@@ -705,7 +705,7 @@ void Func():
 /*@egen*/
 }
 
-//lista de argumentos da fun\u00c3\u00a7\u00c3\u00a3o, permitindo declara\u00c3\u00a7\u00c3\u00b5es mas n\u00c3\u00a3o um valor default para o parametro
+//lista de argumentos da fun\u00e7\u00e3o, permitindo declara\u00e7\u00f5es mas n\u00e3o um valor default para o parametro
 void ListaArg():
 {/*@bgen(jjtree) ListaArg */
   SimpleNode jjtn000 = new SimpleNode(JJTLISTAARG);
@@ -738,7 +738,7 @@ void ListaArg():
 /*@egen*/
 }
 
-// adiciona virgula para os argumentos da fun\u00c3\u00a7\u00c3\u00a3o
+// adiciona virgula para os argumentos da fun\u00e7\u00e3o
 void ListaArg2():
 {/*@bgen(jjtree) ListaArg2 */
   SimpleNode jjtn000 = new SimpleNode(JJTLISTAARG2);

@@ -247,8 +247,7 @@ void Comando ():
 {}
 {
 		<IDENTIFICADOR> Atribuir() 
-		| <IF> <APARENT> Exp_logicas() <FPARENT><ACHAVES>SeqComandos()<FCHAVES> <PTOVIRGULA>
-		
+		| <IF> <APARENT> Exp_logicas() <FPARENT><ACHAVES>SeqComandos()<FCHAVES> (<ELSE> <ACHAVES>SeqComandos()<FCHAVES>)? <PTOVIRGULA>
 		| <WHILE> <APARENT> Exp_logicas() <FPARENT><ACHAVES>SeqComandos()<FCHAVES> <PTOVIRGULA>
 		| <DO> <ACHAVES>SeqComandos()<FCHAVES> <WHILE> <APARENT> Exp_logicas() <FPARENT> <PTOVIRGULA>						
 		| <RETURN> Exp() <PTOVIRGULA>

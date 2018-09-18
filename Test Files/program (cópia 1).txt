@@ -1,4 +1,4 @@
-﻿main{
+﻿main {
 	// comentario de linha
     /* comentario
 	de
@@ -20,8 +20,8 @@
 	//variaveis tipo bool 
 	
 	cage bcage teste;
-	cage bcage teste1:=true;
-	cage bcage teste2:=false;
+	cage bcage teste1:=trucage;
+	cage bcage teste2:=falcage;
 
 	test := trucage ;
 	teste := falcage;
@@ -35,12 +35,9 @@
 	} ;
 	cageif ((1 ! 3)) {
 		a := ola() ;
-	} elcages{
-		cageif ((1 ! 3)) {
+	};elcages{
 		a := ola() ;
-	};
-		a := ola() ;
-	};
+	} ;
 
 	cageif ((1 <= 3)) {
 		a := ola() ;
