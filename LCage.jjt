@@ -109,10 +109,9 @@ SPECIAL_TOKEN : {
 <INVALIDO_LEXICO: 
 (~["a"-"z",
 "A"-"Z",
-"0"-"9","\"","(",")","[","]","{","}",";",",",".","=",">","<","!","+","-","*","/","%"," ","\t","\n","\r","\f"
+"0"-"9","\"","(",")","[","]","{","}",";",",",".","=",">","<","!","+","-","*","/","%"," ","_",";","\t","\n","\r","\f"
 ])+>{System.err.println("Linha "+ input_stream.getEndLine()+" Coluna "+ input_stream.getEndColumn()+" Caractere invalido encontrado: " + image + "TOTAL ERRO "+countLexError);
                           countLexError++;
-                          System.out.println("Erro Lexico --------> "+image);
                           System.out.println("\u005cn\u005cnErro lexico -------->  Linha "+ input_stream.getEndLine()+" Coluna "+ input_stream.getEndColumn()+" "+image +"\u005cn");
                           }
 |
@@ -142,7 +141,7 @@ SimpleNode LCage () :
 {return jjtThis;}
 }
 	
-
+// Define a função main do programa
 void Main ():
 {}
 {
@@ -155,20 +154,7 @@ void Main ():
 
 }
 
-void Atribuicao():
-{}
-{
-	 Atribuir()
-	 | <PTOVIRGULA>  
-}
-
-void Mdeclaracao():
-{}
-{
- <VIRGULA> <IDENTIFICADOR> Atribuicao()
-}
-
-
+//Declarações de variaveis
 void VarDecl ():
 {}
 {
@@ -181,12 +167,73 @@ void Tipo ():
 	<INT> | <BOOL> | <FLOAT>
 }
 
+// Deriva em atribuir ou adiciona ponto e virgula
+void Atribuicao():
+{}
+{
+	 Atribuir()
+	 | <PTOVIRGULA>  
+}
+
+// Atribui  uma expressão a uma variavel, uma expressão  (( 1+1 )), ou deriva em Mdeclaracao permitindo  multiplas declarações
+void Atribuir ():
+{}
+{
+	<ATRIB> Exp() Loop()  | <APARENT> ( ListaExp() )? <FPARENT> <PTOVIRGULA> | Mdeclaracao() 
+}
+
+// Adiciona virgula a atribuicao permitindo multipla declaração do tipo: var fcage a,b,c;
+void Mdeclaracao():
+{}
+{
+ <VIRGULA> <IDENTIFICADOR> Atribuicao()
+}
+
+// adiciona mais uma atribuicao na mesma linha ex: var icage a:=1,b:=2;
+void Loop():
+{}
+{
+	 Mdeclaracao() | <PTOVIRGULA>
+}	
+
+
+// uma expressão matematica entre parenteses ou deriva em Fator
+void Exp():
+{}
+{
+	<APARENT> Exp() <OP> Exp() <FPARENT> | Fator()
+}
+
+// gera uma chamada de função ou  um numero ou  true ou false
+void Fator():
+{}
+{
+	<IDENTIFICADOR> ( <APARENT> ( ListaExp() )? <FPARENT> )? | <TOKEN_NUMLIT> | <TRUE> | <FALSE>
+}
+// uma Exp e derivando em ListaExp2 
+void ListaExp():
+{}
+{
+	Exp() ListaExp2()
+}
+
+// permite usar virgula nos parametros das funcoes nas declaração exp: cage fcage b := func(a,b)
+void ListaExp2():
+{}
+{
+	(<VIRGULA> Exp() ListaExp2())?
+}
+
+
+// após as declarações de variaveis usa-se essa função para criar os loops,condicionais entre outros.
 void SeqComandos ():
 {}
 {
 	(Comando())*
 }
-
+// pode-se atribuir um valor a uma variavel  ex: a := (1 + 1);
+//declarar estrutura condicional, comando de repeticao do tipo NCAGE, e do tipo DOCAGE
+// Retornar valor , e usar a função de mostrar na tela (PRINT)
 void Comando ():
 {}
 {
@@ -198,82 +245,42 @@ void Comando ():
 
 }
 
-void Atribuir ():
-{}
-{
-	<ATRIB> Exp() Loop()  | <APARENT> ( ListaExp() )? <FPARENT> <PTOVIRGULA>| Mdeclaracao() 
-}
 
 
-void Loop():
-{}
-{
-	 Mdeclaracao() | <PTOVIRGULA>
-}	
-// expressões 
-void Exp():
-{}
-{
-	<APARENT> Exp() <OP> Exp() <FPARENT> | Fator()
-}
 
-void Fator():
-{}
-{
-	<IDENTIFICADOR> ( <APARENT> ( ListaExp() )? <FPARENT> )? | <TOKEN_NUMLIT> | <TRUE> | <FALSE>
-}
 
-void ListaExp():
-{}
-{
-	Exp() ListaExp2()
-}
-
-void ListaExp2():
-{}
-{
-	(<VIRGULA> Exp() ListaExp2())?
-}
-// expressões logicas
+//  uma expressão logica entre parenteses ou deriva em Fator_logico
 void Exp_logicas():
 {}
 {
 	<APARENT> Exp_logicas() <OPL> Exp_logicas() <FPARENT> | Fator_logico()
 }
 
+// gera um identificador  ou  um numero ou  true ou false
+
 void Fator_logico():
 {}
 {
-	<IDENTIFICADOR> ( <APARENT> ( ListaExp_logico() )? <FPARENT> )? | <TOKEN_NUMLIT> | <TRUE> | <FALSE>
-}
-
-
-void ListaExp_logico():
-{}
-{
-	Exp_logicas() ListaExp2()
-}
-
-void ListaExp2_logico():
-{}
-{
-	(<VIRGULA> Exp_logicas() ListaExp2_logico())?
+	<IDENTIFICADOR> | <TOKEN_NUMLIT> | <TRUE> | <FALSE>
 }
 
 
 
+//declara funções
 void Func():
 {}
 {
 	<FUNCAO> Tipo() <IDENTIFICADOR> <APARENT> ( ListaArg() )? <FPARENT> <ACHAVES> VarDecl() SeqComandos() <FCHAVES>
 }
 
+//lista de argumentos da função, permitindo declarações mas não um valor default para o parametro
 void ListaArg():
 {}
 {
 	Tipo() <IDENTIFICADOR> ListaArg2()
 }
 
+// adiciona virgula para os argumentos da função
 void ListaArg2():
 {}
 {

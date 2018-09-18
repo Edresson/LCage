@@ -23,7 +23,7 @@ public static void main(String args[]) throws ParseException,IOException {
 	}
 	catch (Error e)
 	{
-		System.out.println(e.getMessage()); //Mensagem de erro l\u00c3\u00a9xico (em ingles) mostrando linha e coluna
+		System.out.println(e.getMessage()); //Mensagem de erro l\u00e9xico (em ingles) mostrando linha e coluna
 	}
 
 
@@ -113,10 +113,9 @@ SPECIAL_TOKEN : {
 <INVALIDO_LEXICO: 
 (~["a"-"z",
 "A"-"Z",
-"0"-"9","\"","(",")","[","]","{","}",";",",",".","=",">","<","!","+","-","*","/","%"," ","\t","\n","\r","\f"
+"0"-"9","\"","(",")","[","]","{","}",";",",",".","=",">","<","!","+","-","*","/","%"," ","_",";","\t","\n","\r","\f"
 ])+>{System.err.println("Linha "+ input_stream.getEndLine()+" Coluna "+ input_stream.getEndColumn()+" Caractere invalido encontrado: " + image + "TOTAL ERRO "+countLexError);
                           countLexError++;
-                          System.out.println("Erro Lexico --------> "+image);
                           System.out.println("\n\nErro lexico -------->  Linha "+ input_stream.getEndLine()+" Coluna "+ input_stream.getEndColumn()+" "+image +"\n");
                           }
 |
@@ -177,7 +176,7 @@ SimpleNode LCage () :
 /*@egen*/
 }
 	
-
+// Define a fun\u00e7\u00e3o main do programa
 void Main ():
 {/*@bgen(jjtree) Main */
   SimpleNode jjtn000 = new SimpleNode(JJTMAIN);
@@ -216,72 +215,7 @@ void Main ():
 
 }
 
-void Atribuicao():
-{/*@bgen(jjtree) Atribuicao */
-  SimpleNode jjtn000 = new SimpleNode(JJTATRIBUICAO);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
-/*@egen*/}
-{/*@bgen(jjtree) Atribuicao */
-         try {
-/*@egen*/
-	 Atribuir()
-	 | <PTOVIRGULA>/*@bgen(jjtree)*/
-         } catch (Throwable jjte000) {
-           if (jjtc000) {
-             jjtree.clearNodeScope(jjtn000);
-             jjtc000 = false;
-           } else {
-             jjtree.popNode();
-           }
-           if (jjte000 instanceof RuntimeException) {
-             throw (RuntimeException)jjte000;
-           }
-           if (jjte000 instanceof ParseException) {
-             throw (ParseException)jjte000;
-           }
-           throw (Error)jjte000;
-         } finally {
-           if (jjtc000) {
-             jjtree.closeNodeScope(jjtn000, true);
-           }
-         }
-/*@egen*/  
-}
-
-void Mdeclaracao():
-{/*@bgen(jjtree) Mdeclaracao */
-  SimpleNode jjtn000 = new SimpleNode(JJTMDECLARACAO);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
-/*@egen*/}
-{/*@bgen(jjtree) Mdeclaracao */
- try {
-/*@egen*/
- <VIRGULA> <IDENTIFICADOR> Atribuicao()/*@bgen(jjtree)*/
- } catch (Throwable jjte000) {
-   if (jjtc000) {
-     jjtree.clearNodeScope(jjtn000);
-     jjtc000 = false;
-   } else {
-     jjtree.popNode();
-   }
-   if (jjte000 instanceof RuntimeException) {
-     throw (RuntimeException)jjte000;
-   }
-   if (jjte000 instanceof ParseException) {
-     throw (ParseException)jjte000;
-   }
-   throw (Error)jjte000;
- } finally {
-   if (jjtc000) {
-     jjtree.closeNodeScope(jjtn000, true);
-   }
- }
-/*@egen*/
-}
-
-
+//Declara\u00e7\u00f5es de variaveis
 void VarDecl ():
 {/*@bgen(jjtree) VarDecl */
   SimpleNode jjtn000 = new SimpleNode(JJTVARDECL);
@@ -332,6 +266,273 @@ void Tipo ():
 /*@egen*/
 }
 
+// Deriva em atribuir ou adiciona ponto e virgula
+void Atribuicao():
+{/*@bgen(jjtree) Atribuicao */
+  SimpleNode jjtn000 = new SimpleNode(JJTATRIBUICAO);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
+/*@egen*/}
+{/*@bgen(jjtree) Atribuicao */
+         try {
+/*@egen*/
+	 Atribuir()
+	 | <PTOVIRGULA>/*@bgen(jjtree)*/
+         } catch (Throwable jjte000) {
+           if (jjtc000) {
+             jjtree.clearNodeScope(jjtn000);
+             jjtc000 = false;
+           } else {
+             jjtree.popNode();
+           }
+           if (jjte000 instanceof RuntimeException) {
+             throw (RuntimeException)jjte000;
+           }
+           if (jjte000 instanceof ParseException) {
+             throw (ParseException)jjte000;
+           }
+           throw (Error)jjte000;
+         } finally {
+           if (jjtc000) {
+             jjtree.closeNodeScope(jjtn000, true);
+           }
+         }
+/*@egen*/  
+}
+
+// Atribui  uma express\u00e3o a uma variavel, uma express\u00e3o  (( 1+1 )), ou deriva em Mdeclaracao permitindo  multiplas declara\u00e7\u00f5es
+void Atribuir ():
+{/*@bgen(jjtree) Atribuir */
+  SimpleNode jjtn000 = new SimpleNode(JJTATRIBUIR);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
+/*@egen*/}
+{/*@bgen(jjtree) Atribuir */
+        try {
+/*@egen*/
+	<ATRIB> Exp() Loop()  | <APARENT> ( ListaExp() )? <FPARENT> <PTOVIRGULA> | Mdeclaracao()/*@bgen(jjtree)*/
+        } catch (Throwable jjte000) {
+          if (jjtc000) {
+            jjtree.clearNodeScope(jjtn000);
+            jjtc000 = false;
+          } else {
+            jjtree.popNode();
+          }
+          if (jjte000 instanceof RuntimeException) {
+            throw (RuntimeException)jjte000;
+          }
+          if (jjte000 instanceof ParseException) {
+            throw (ParseException)jjte000;
+          }
+          throw (Error)jjte000;
+        } finally {
+          if (jjtc000) {
+            jjtree.closeNodeScope(jjtn000, true);
+          }
+        }
+/*@egen*/ 
+}
+
+// Adiciona virgula a atribuicao permitindo multipla declara\u00e7\u00e3o do tipo: var fcage a,b,c;
+void Mdeclaracao():
+{/*@bgen(jjtree) Mdeclaracao */
+  SimpleNode jjtn000 = new SimpleNode(JJTMDECLARACAO);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
+/*@egen*/}
+{/*@bgen(jjtree) Mdeclaracao */
+ try {
+/*@egen*/
+ <VIRGULA> <IDENTIFICADOR> Atribuicao()/*@bgen(jjtree)*/
+ } catch (Throwable jjte000) {
+   if (jjtc000) {
+     jjtree.clearNodeScope(jjtn000);
+     jjtc000 = false;
+   } else {
+     jjtree.popNode();
+   }
+   if (jjte000 instanceof RuntimeException) {
+     throw (RuntimeException)jjte000;
+   }
+   if (jjte000 instanceof ParseException) {
+     throw (ParseException)jjte000;
+   }
+   throw (Error)jjte000;
+ } finally {
+   if (jjtc000) {
+     jjtree.closeNodeScope(jjtn000, true);
+   }
+ }
+/*@egen*/
+}
+
+// adiciona mais uma atribuicao na mesma linha ex: var icage a:=1,b:=2;
+void Loop():
+{/*@bgen(jjtree) Loop */
+  SimpleNode jjtn000 = new SimpleNode(JJTLOOP);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
+/*@egen*/}
+{/*@bgen(jjtree) Loop */
+         try {
+/*@egen*/
+	 Mdeclaracao() | <PTOVIRGULA>/*@bgen(jjtree)*/
+         } catch (Throwable jjte000) {
+           if (jjtc000) {
+             jjtree.clearNodeScope(jjtn000);
+             jjtc000 = false;
+           } else {
+             jjtree.popNode();
+           }
+           if (jjte000 instanceof RuntimeException) {
+             throw (RuntimeException)jjte000;
+           }
+           if (jjte000 instanceof ParseException) {
+             throw (ParseException)jjte000;
+           }
+           throw (Error)jjte000;
+         } finally {
+           if (jjtc000) {
+             jjtree.closeNodeScope(jjtn000, true);
+           }
+         }
+/*@egen*/
+}	
+
+
+// uma express\u00e3o matematica entre parenteses ou deriva em Fator
+void Exp():
+{/*@bgen(jjtree) Exp */
+  SimpleNode jjtn000 = new SimpleNode(JJTEXP);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
+/*@egen*/}
+{/*@bgen(jjtree) Exp */
+        try {
+/*@egen*/
+	<APARENT> Exp() <OP> Exp() <FPARENT> | Fator()/*@bgen(jjtree)*/
+        } catch (Throwable jjte000) {
+          if (jjtc000) {
+            jjtree.clearNodeScope(jjtn000);
+            jjtc000 = false;
+          } else {
+            jjtree.popNode();
+          }
+          if (jjte000 instanceof RuntimeException) {
+            throw (RuntimeException)jjte000;
+          }
+          if (jjte000 instanceof ParseException) {
+            throw (ParseException)jjte000;
+          }
+          throw (Error)jjte000;
+        } finally {
+          if (jjtc000) {
+            jjtree.closeNodeScope(jjtn000, true);
+          }
+        }
+/*@egen*/
+}
+
+// gera uma chamada de fun\u00e7\u00e3o ou  um numero ou  true ou false
+void Fator():
+{/*@bgen(jjtree) Fator */
+  SimpleNode jjtn000 = new SimpleNode(JJTFATOR);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
+/*@egen*/}
+{/*@bgen(jjtree) Fator */
+        try {
+/*@egen*/
+	<IDENTIFICADOR> ( <APARENT> ( ListaExp() )? <FPARENT> )? | <TOKEN_NUMLIT> | <TRUE> | <FALSE>/*@bgen(jjtree)*/
+        } catch (Throwable jjte000) {
+          if (jjtc000) {
+            jjtree.clearNodeScope(jjtn000);
+            jjtc000 = false;
+          } else {
+            jjtree.popNode();
+          }
+          if (jjte000 instanceof RuntimeException) {
+            throw (RuntimeException)jjte000;
+          }
+          if (jjte000 instanceof ParseException) {
+            throw (ParseException)jjte000;
+          }
+          throw (Error)jjte000;
+        } finally {
+          if (jjtc000) {
+            jjtree.closeNodeScope(jjtn000, true);
+          }
+        }
+/*@egen*/
+}
+// uma Exp e derivando em ListaExp2 
+void ListaExp():
+{/*@bgen(jjtree) ListaExp */
+  SimpleNode jjtn000 = new SimpleNode(JJTLISTAEXP);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
+/*@egen*/}
+{/*@bgen(jjtree) ListaExp */
+        try {
+/*@egen*/
+	Exp() ListaExp2()/*@bgen(jjtree)*/
+        } catch (Throwable jjte000) {
+          if (jjtc000) {
+            jjtree.clearNodeScope(jjtn000);
+            jjtc000 = false;
+          } else {
+            jjtree.popNode();
+          }
+          if (jjte000 instanceof RuntimeException) {
+            throw (RuntimeException)jjte000;
+          }
+          if (jjte000 instanceof ParseException) {
+            throw (ParseException)jjte000;
+          }
+          throw (Error)jjte000;
+        } finally {
+          if (jjtc000) {
+            jjtree.closeNodeScope(jjtn000, true);
+          }
+        }
+/*@egen*/
+}
+
+// permite usar virgula nos parametros das funcoes nas declara\u00e7\u00e3o exp: cage fcage b := func(a,b)
+void ListaExp2():
+{/*@bgen(jjtree) ListaExp2 */
+  SimpleNode jjtn000 = new SimpleNode(JJTLISTAEXP2);
+  boolean jjtc000 = true;
+  jjtree.openNodeScope(jjtn000);
+/*@egen*/}
+{/*@bgen(jjtree) ListaExp2 */
+        try {
+/*@egen*/
+	(<VIRGULA> Exp() ListaExp2())?/*@bgen(jjtree)*/
+        } catch (Throwable jjte000) {
+          if (jjtc000) {
+            jjtree.clearNodeScope(jjtn000);
+            jjtc000 = false;
+          } else {
+            jjtree.popNode();
+          }
+          if (jjte000 instanceof RuntimeException) {
+            throw (RuntimeException)jjte000;
+          }
+          if (jjte000 instanceof ParseException) {
+            throw (ParseException)jjte000;
+          }
+          throw (Error)jjte000;
+        } finally {
+          if (jjtc000) {
+            jjtree.closeNodeScope(jjtn000, true);
+          }
+        }
+/*@egen*/
+}
+
+
+// ap\u00f3s as declara\u00e7\u00f5es de variaveis usa-se essa fun\u00e7\u00e3o para criar os loops,condicionais entre outros.
 void SeqComandos ():
 {/*@bgen(jjtree) SeqComandos */
   SimpleNode jjtn000 = new SimpleNode(JJTSEQCOMANDOS);
@@ -363,7 +564,9 @@ void SeqComandos ():
         }
 /*@egen*/
 }
-
+// pode-se atribuir um valor a uma variavel  ex: a := (1 + 1);
+//declarar estrutura condicional, comando de repeticao do tipo NCAGE, e do tipo DOCAGE
+// Retornar valor , e usar a fun\u00e7\u00e3o de mostrar na tela (PRINT)
 void Comando ():
 {/*@bgen(jjtree) Comando */
   SimpleNode jjtn000 = new SimpleNode(JJTCOMANDO);
@@ -401,199 +604,11 @@ void Comando ():
 
 }
 
-void Atribuir ():
-{/*@bgen(jjtree) Atribuir */
-  SimpleNode jjtn000 = new SimpleNode(JJTATRIBUIR);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
-/*@egen*/}
-{/*@bgen(jjtree) Atribuir */
-        try {
-/*@egen*/
-	<ATRIB> Exp() Loop()  | <APARENT> ( ListaExp() )? <FPARENT> <PTOVIRGULA>| Mdeclaracao()/*@bgen(jjtree)*/
-        } catch (Throwable jjte000) {
-          if (jjtc000) {
-            jjtree.clearNodeScope(jjtn000);
-            jjtc000 = false;
-          } else {
-            jjtree.popNode();
-          }
-          if (jjte000 instanceof RuntimeException) {
-            throw (RuntimeException)jjte000;
-          }
-          if (jjte000 instanceof ParseException) {
-            throw (ParseException)jjte000;
-          }
-          throw (Error)jjte000;
-        } finally {
-          if (jjtc000) {
-            jjtree.closeNodeScope(jjtn000, true);
-          }
-        }
-/*@egen*/ 
-}
 
 
-void Loop():
-{/*@bgen(jjtree) Loop */
-  SimpleNode jjtn000 = new SimpleNode(JJTLOOP);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
-/*@egen*/}
-{/*@bgen(jjtree) Loop */
-         try {
-/*@egen*/
-	 Mdeclaracao() | <PTOVIRGULA>/*@bgen(jjtree)*/
-         } catch (Throwable jjte000) {
-           if (jjtc000) {
-             jjtree.clearNodeScope(jjtn000);
-             jjtc000 = false;
-           } else {
-             jjtree.popNode();
-           }
-           if (jjte000 instanceof RuntimeException) {
-             throw (RuntimeException)jjte000;
-           }
-           if (jjte000 instanceof ParseException) {
-             throw (ParseException)jjte000;
-           }
-           throw (Error)jjte000;
-         } finally {
-           if (jjtc000) {
-             jjtree.closeNodeScope(jjtn000, true);
-           }
-         }
-/*@egen*/
-}	
-// express\u00c3\u00b5es 
-void Exp():
-{/*@bgen(jjtree) Exp */
-  SimpleNode jjtn000 = new SimpleNode(JJTEXP);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
-/*@egen*/}
-{/*@bgen(jjtree) Exp */
-        try {
-/*@egen*/
-	<APARENT> Exp() <OP> Exp() <FPARENT> | Fator()/*@bgen(jjtree)*/
-        } catch (Throwable jjte000) {
-          if (jjtc000) {
-            jjtree.clearNodeScope(jjtn000);
-            jjtc000 = false;
-          } else {
-            jjtree.popNode();
-          }
-          if (jjte000 instanceof RuntimeException) {
-            throw (RuntimeException)jjte000;
-          }
-          if (jjte000 instanceof ParseException) {
-            throw (ParseException)jjte000;
-          }
-          throw (Error)jjte000;
-        } finally {
-          if (jjtc000) {
-            jjtree.closeNodeScope(jjtn000, true);
-          }
-        }
-/*@egen*/
-}
 
-void Fator():
-{/*@bgen(jjtree) Fator */
-  SimpleNode jjtn000 = new SimpleNode(JJTFATOR);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
-/*@egen*/}
-{/*@bgen(jjtree) Fator */
-        try {
-/*@egen*/
-	<IDENTIFICADOR> ( <APARENT> ( ListaExp() )? <FPARENT> )? | <TOKEN_NUMLIT> | <TRUE> | <FALSE>/*@bgen(jjtree)*/
-        } catch (Throwable jjte000) {
-          if (jjtc000) {
-            jjtree.clearNodeScope(jjtn000);
-            jjtc000 = false;
-          } else {
-            jjtree.popNode();
-          }
-          if (jjte000 instanceof RuntimeException) {
-            throw (RuntimeException)jjte000;
-          }
-          if (jjte000 instanceof ParseException) {
-            throw (ParseException)jjte000;
-          }
-          throw (Error)jjte000;
-        } finally {
-          if (jjtc000) {
-            jjtree.closeNodeScope(jjtn000, true);
-          }
-        }
-/*@egen*/
-}
 
-void ListaExp():
-{/*@bgen(jjtree) ListaExp */
-  SimpleNode jjtn000 = new SimpleNode(JJTLISTAEXP);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
-/*@egen*/}
-{/*@bgen(jjtree) ListaExp */
-        try {
-/*@egen*/
-	Exp() ListaExp2()/*@bgen(jjtree)*/
-        } catch (Throwable jjte000) {
-          if (jjtc000) {
-            jjtree.clearNodeScope(jjtn000);
-            jjtc000 = false;
-          } else {
-            jjtree.popNode();
-          }
-          if (jjte000 instanceof RuntimeException) {
-            throw (RuntimeException)jjte000;
-          }
-          if (jjte000 instanceof ParseException) {
-            throw (ParseException)jjte000;
-          }
-          throw (Error)jjte000;
-        } finally {
-          if (jjtc000) {
-            jjtree.closeNodeScope(jjtn000, true);
-          }
-        }
-/*@egen*/
-}
-
-void ListaExp2():
-{/*@bgen(jjtree) ListaExp2 */
-  SimpleNode jjtn000 = new SimpleNode(JJTLISTAEXP2);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
-/*@egen*/}
-{/*@bgen(jjtree) ListaExp2 */
-        try {
-/*@egen*/
-	(<VIRGULA> Exp() ListaExp2())?/*@bgen(jjtree)*/
-        } catch (Throwable jjte000) {
-          if (jjtc000) {
-            jjtree.clearNodeScope(jjtn000);
-            jjtc000 = false;
-          } else {
-            jjtree.popNode();
-          }
-          if (jjte000 instanceof RuntimeException) {
-            throw (RuntimeException)jjte000;
-          }
-          if (jjte000 instanceof ParseException) {
-            throw (ParseException)jjte000;
-          }
-          throw (Error)jjte000;
-        } finally {
-          if (jjtc000) {
-            jjtree.closeNodeScope(jjtn000, true);
-          }
-        }
-/*@egen*/
-}
-// express\u00c3\u00b5es logicas
+//  uma express\u00e3o logica entre parenteses ou deriva em Fator_logico
 void Exp_logicas():
 {/*@bgen(jjtree) Exp_logicas */
   SimpleNode jjtn000 = new SimpleNode(JJTEXP_LOGICAS);
@@ -626,6 +641,8 @@ void Exp_logicas():
 /*@egen*/
 }
 
+// gera um identificador  ou  um numero ou  true ou false
+
 void Fator_logico():
 {/*@bgen(jjtree) Fator_logico */
   SimpleNode jjtn000 = new SimpleNode(JJTFATOR_LOGICO);
@@ -635,86 +652,7 @@ void Fator_logico():
 {/*@bgen(jjtree) Fator_logico */
         try {
 /*@egen*/
-	<IDENTIFICADOR> ( <APARENT> ( ListaExp_logico() )? <FPARENT> )? | <TOKEN_NUMLIT> | <TRUE> | <FALSE>/*@bgen(jjtree)*/
-        } catch (Throwable jjte000) {
-          if (jjtc000) {
-            jjtree.clearNodeScope(jjtn000);
-            jjtc000 = false;
-          } else {
-            jjtree.popNode();
-          }
-          if (jjte000 instanceof RuntimeException) {
-            throw (RuntimeException)jjte000;
-          }
-          if (jjte000 instanceof ParseException) {
-            throw (ParseException)jjte000;
-          }
-          throw (Error)jjte000;
-        } finally {
-          if (jjtc000) {
-            jjtree.closeNodeScope(jjtn000, true);
-          }
-        }
-/*@egen*/
-}
-
-
-void ListaExp_logico():
-{/*@bgen(jjtree) ListaExp_logico */
-  SimpleNode jjtn000 = new SimpleNode(JJTLISTAEXP_LOGICO);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
-/*@egen*/}
-{/*@bgen(jjtree) ListaExp_logico */
-        try {
-/*@egen*/
-	Exp_logicas() ListaExp2()/*@bgen(jjtree)*/
-        } catch (Throwable jjte000) {
-          if (jjtc000) {
-            jjtree.clearNodeScope(jjtn000);
-            jjtc000 = false;
-          } else {
-            jjtree.popNode();
-          }
-          if (jjte000 instanceof RuntimeException) {
-            throw (RuntimeException)jjte000;
-          }
-          if (jjte000 instanceof ParseException) {
-            throw (ParseException)jjte000;
-          }
-          throw (Error)jjte000;
-        } finally {
-          if (jjtc000) {
-            jjtree.closeNodeScope(jjtn000, true);
-          }
-        }
-/*@egen*/
-}
-
-void ListaExp2_logico():
-{/*@bgen(jjtree) ListaExp2_logico */
-  SimpleNode jjtn000 = new SimpleNode(JJTLISTAEXP2_LOGICO);
-  boolean jjtc000 = true;
-  jjtree.openNodeScope(jjtn000);
-/*@egen*/}
-{/*@bgen(jjtree) ListaExp2_logico */
-        try {
-/*@egen*/
-	(<VIRGULA> Exp_logicas() ListaExp2_logico())?/*@bgen(jjtree)*/
-        } catch (Throwable jjte000) {
-          if (jjtc000) {
-            jjtree.clearNodeScope(jjtn000);
-            jjtc000 = false;
-          } else {
-            jjtree.popNode();
-          }
-          if (jjte000 instanceof RuntimeException) {
-            throw (RuntimeException)jjte000;
-          }
-          if (jjte000 instanceof ParseException) {
-            throw (ParseException)jjte000;
-          }
-          throw (Error)jjte000;
+	<IDENTIFICADOR> | <TOKEN_NUMLIT> | <TRUE> | <FALSE>/*@bgen(jjtree)*/
         } finally {
           if (jjtc000) {
             jjtree.closeNodeScope(jjtn000, true);
@@ -725,6 +663,7 @@ void ListaExp2_logico():
 
 
 
+//declara fun\u00e7\u00f5es
 void Func():
 {/*@bgen(jjtree) Func */
   SimpleNode jjtn000 = new SimpleNode(JJTFUNC);
@@ -757,6 +696,7 @@ void Func():
 /*@egen*/
 }
 
+//lista de argumentos da fun\u00e7\u00e3o, permitindo declara\u00e7\u00f5es mas n\u00e3o um valor default para o parametro
 void ListaArg():
 {/*@bgen(jjtree) ListaArg */
   SimpleNode jjtn000 = new SimpleNode(JJTLISTAARG);
@@ -789,6 +729,7 @@ void ListaArg():
 /*@egen*/
 }
 
+// adiciona virgula para os argumentos da fun\u00e7\u00e3o
 void ListaArg2():
 {/*@bgen(jjtree) ListaArg2 */
   SimpleNode jjtn000 = new SimpleNode(JJTLISTAARG2);

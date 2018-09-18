@@ -14,7 +14,11 @@
 	cage fcage g:=1,b:=1,c:=3; 
 	cage fcage a_b_a ;
 	cage fcage a_b;
+	cage fcage a_b:=print(a);
+	cage fcage a (( 1+1 )) ;
+	cage fcage b := func(a,b);
 	//variaveis tipo bool 
+	
 	cage bcage teste;
 	cage bcage teste1:=true;
 	cage bcage teste2:=false;
@@ -43,7 +47,8 @@
 
 	// while 
 	ncage ((b == a)) { 
-		print (a) ;
+		a := 1;
+		//print (a) ;
 	} ;
 	// do while
 	docage {
