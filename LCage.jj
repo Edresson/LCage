@@ -106,7 +106,7 @@ TOKEN :
 // TRATANDO OS ERROS LEXICOS ENCONTRADOS
 SPECIAL_TOKEN : {
 	<ID_INVALIDO: ("@" | "!" | "#" | "*" | "-" | "+" "=" | "&" | <DIGITO>)(<LETRA>|<DIGITO> | "_" | "@")*>{
-		System.out.println("IDENTIFICADOR: "+image);
+		System.out.println("Identificador Invalido: "+image);
 		countLexError++;
 		System.out.println(
 			"\n\nErro lexico -------->  Linha "+
@@ -122,23 +122,11 @@ SPECIAL_TOKEN : {
 <INVALIDO_LEXICO: 
 (~["a"-"z",
 "A"-"Z",
-"0"-"9","\"","(",")","[","]","{","}",";",",",".","=",">","<","!","+","-","*","/","%"," ","_",";","\t","\n","\r","\f"
-])+>{System.err.println("Linha "+ input_stream.getEndLine()+" Coluna "+ input_stream.getEndColumn()+" Caractere invalido encontrado: " + image + "TOTAL ERRO "+countLexError);
+"0"-"9","\"","(",")","{","}",";",",",".","=",":",">","<","!","+","-","*","/"," ","_",";","\t","\n","\r","\f"
+])+>{System.out.println("Linha "+ input_stream.getEndLine()+" Coluna "+ input_stream.getEndColumn()+" Caractere invalido encontrado: " + image + "TOTAL ERRO "+countLexError);
                           countLexError++;
                           System.out.println("\n\nErro lexico -------->  Linha "+ input_stream.getEndLine()+" Coluna "+ input_stream.getEndColumn()+" "+image +"\n");
                           }
-|
-<INVALID_CONST:
-"\"" (~["\n","\r","\""])*["\n","\r"]>{System.err.println("Linha "+ input_stream.getEndLine()+" Coluna "+ input_stream.getEndColumn()+" Caractere invalido encontrado \\n: " + image+" Era esperado uma aspa");
-                                     countLexError++;
-                                     System.out.println("Erro Lexico --------> "+image);
-                                     System.out.println("\n\nErro lexico -------->  Linha "+ input_stream.getEndLine()+" Coluna "+ input_stream.getEndColumn()+" "+image+"\n");
-                                     }
-| <INVALID_CONSTANTE_CHAR: "\'" ( ~["\"","\\","\n","\r"] | "\\" ( ["n","t","b","r","f","\\","\""] | ( ["\n","\r"] | "\r\n")))* "\'">{
-                                     System.out.println("Erro lexico: --------> "+image);
-                                     System.out.println("\n\nErro lexico: --------> "+image);
-                                     }
-
 }
 
 

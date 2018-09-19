@@ -1,12 +1,8 @@
-main {
-    cage icage a1 ;
-    cage icage b2 ;
-    cage bcage c3 ;
-    cage fcage c4;
-    a1 := 10 ;
-    b2 := 20; 
-    if ((( 2 * a1) == b2 )) {
-        c3 := true ;
-        
-    } ;
+main{
+	//cage icage a
+	cageif (a ! b) {
+		a := (a+1);
+	}
+	
+
 }
